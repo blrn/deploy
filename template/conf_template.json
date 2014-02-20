@@ -5,20 +5,21 @@
 	"targets": [
 		{
 			"name":"meow",
+			"root_path": "path/to/project/root/on_server/",
 			"ignore": {
 
 				"file": [
-					"ignorefile1", 
-					"ignorefile2"
+					"ignore_file1", 
+					"ignore_file2",
+					"ignore_directory"
 				],
-				"directory": [
-					"ignoreDirectory",
-					"ignoreDirecotry2"
+				"group": [
+					"python_regex",
+					"see http://docs.python.org/2/library/re.html"
 				],
-				"file_group": [
-					"^filesThatStartThisWay",
-					"filesThatEndThisWay$",
-					".extensions"
+				"extension": [
+					"txt",
+					"json"
 				]
 			}
 		}
