@@ -1,0 +1,26 @@
+{
+	"host": "host_address",
+	"username": "username",
+	"port": "port (optional)",
+	"targets": [
+		{
+			"name":"meow",
+			"ignore": {
+
+				"file": [
+					"ignorefile1", 
+					"ignorefile2"
+				],
+				"directory": [
+					"ignoreDirectory",
+					"ignoreDirecotry2"
+				],
+				"file_group": [
+					"^filesThatStartThisWay",
+					"filesThatEndThisWay$",
+					".extensions"
+				]
+			}
+		}
+	]
+}
