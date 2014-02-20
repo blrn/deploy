@@ -15,12 +15,20 @@ class Config(object):
 	def __init__(self, config_file_name=".deploy_conf"):
 		self.config_file_name = config_file_name
 
+	def config_file_exists(self):
+		return os.path.isfile(self.config_file_name)
+
 	def load_config(self, name=None):
-		#raises ValueError
+		#raises ConfigError: json
+		#raises IOError
 		config_file = open(self.config_file_name)
-		config_dict = json.load(config_file)
-		config_file.close()
-		self.parse(config_dict, name)
+		try:
+			config_dict = json.load(config_file)
+			config_file.close()
+			self.parse(config_dict, name)
+		except ValueError, e:
+			raise ConfigError("json error", ConfigError.JSON_ERROR)
+		
 
 	def create_config_template(self):
 		template = os.path.dirname(os.path.realpath(__file__)) + "/template/conf_template.json"
@@ -86,10 +94,3 @@ class Config(object):
 				self.ignore_group = ignore['group']
 			if 'extension' in ignore:
 				self.ignore_ext = ignore['extension']
-
-
-
-
-c = Config()
-c.create_config_template()
-c.load_config()
