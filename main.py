@@ -7,18 +7,20 @@ import os
 
 
 	
-def get_files(directory='.'):
+def get_files(config, directory='.'):
 	file_dict = dict()
 	file_list = list()
 	for f in os.listdir(directory):
-		if os.path.isfile(f):
+		print directory + "/" + f, os.path.isdir(directory + "/" + f)
+		if config.ignore(f):
+			continue
+		if os.path.isfile(directory + "/" + f):
 			file_list.append(f)
-		elif os.path.isdir(f):
-			file_dict[f] = get_files(f)
-	if(directory is '.'):
-		file_dict['.'] = file_list
-		return file_dict
-	return file_list
+		elif os.path.isdir(directory + "/" + f):
+			retrurned_files = get_files(config, directory=directory + "/" + f)
+			file_list.append(retrurned_files)
+	file_dict[directory] = file_list
+	return file_dict
 
 def handle_config_error(e):
 	if e.cause is ConfigError.INVALID_NAME_ERROR:
@@ -56,27 +58,8 @@ def main():
 
 	# everthing is set up i think,
 	# implement sftp here
-	file_dict = get_files()
+	file_dict = get_files(config)
 	print file_dict
-	for directory in file_dict:
-		print directory
-		if config.ignore(directory):
-			del file_dict[directory]
-			continue
-		else:
-			i = 0
-			size = len(file_dict[directory])
-			while i < size:
-				file = file_dict[directory][i]
-				print file
-				if config.ignore(file):
-					print "ignore:", file
-					del file_dict[directory][i]
-					size -= 1
-				else:
-					i += 1
-	file_dict
-
 if __name__ == '__main__':
 	main()
 
