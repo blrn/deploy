@@ -94,3 +94,12 @@ class Config(object):
 				self.ignore_group = ignore['group']
 			if 'extension' in ignore:
 				self.ignore_ext = ignore['extension']
+
+	def get_destination_root(self):
+		return self.root_path
+
+	def get_user(self):
+		return self.user
+
+	def get_host(self):
+		return self.host
