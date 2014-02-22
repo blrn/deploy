@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import args
 from config import Config
 from config import ConfigError
@@ -61,8 +59,6 @@ def main():
 	file_dict = get_files(config)
 	sftp = Sftp(config.get_destination_root(), file_dict)
 	sftp.send_files(config.get_user(), config.get_host())
-if __name__ == '__main__':
-	main()
 
 
 

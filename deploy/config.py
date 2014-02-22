@@ -34,7 +34,7 @@ class Config(object):
 		
 
 	def create_config_template(self):
-		template = os.path.dirname(os.path.realpath(__file__)) + "/template/conf_template.json"
+		template = os.path.dirname(os.path.realpath(__file__)) + "/templates/conf_template.json"
 		dest = os.getcwd() + "/" + self.config_file_name
 		self.__copy_file(template,dest)
 
