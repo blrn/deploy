@@ -50,6 +50,8 @@ class Config(object):
 
 	def ignore(self, filename):
 		# returns true if it matches any of the ignores
+		if filename == ".deploy_conf":
+			return True
 		if self.ignore_files is not None:
 			if filename in self.ignore_files:
 				return True
