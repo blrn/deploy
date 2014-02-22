@@ -90,6 +90,8 @@ class Config(object):
 			raise ConfigError("No configuration was found with the given name", ConfigError.INVALID_NAME_ERROR)
 
 		self.root_path = target['root_path']
+		if self.root_path[0:2] == "~/":
+			self.root_path = self.root_path[2:]
 		if "ignore" in target:
 			#TODO: DOCS!
 			ignore = target['ignore']
