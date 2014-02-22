@@ -14,6 +14,9 @@ class Config(object):
 #TODO: docs!
 	def __init__(self, config_file_name=".deploy_conf"):
 		self.config_file_name = config_file_name
+		self.ignore_files = None
+		self.ignore_ext = None
+		self.ignore_group = None
 
 	def config_file_exists(self):
 		return os.path.isfile(self.config_file_name)
