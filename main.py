@@ -4,6 +4,7 @@ import args
 from config import Config
 from config import ConfigError
 import os
+from sftp import Sftp
 
 
 	
@@ -11,7 +12,6 @@ def get_files(config, directory='.'):
 	file_dict = dict()
 	file_list = list()
 	for f in os.listdir(directory):
-		print directory + "/" + f, os.path.isdir(directory + "/" + f)
 		if config.ignore(f):
 			continue
 		if os.path.isfile(directory + "/" + f):
@@ -59,7 +59,8 @@ def main():
 	# everthing is set up i think,
 	# implement sftp here
 	file_dict = get_files(config)
-	print file_dict
+	sftp = Sftp(config.get_destination_root(), file_dict)
+	sftp.send_files(config.get_user(), config.get_host())
 if __name__ == '__main__':
 	main()
 
