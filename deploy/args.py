@@ -47,7 +47,7 @@ class CommandParser(object):
 
 	def show_help(self):
 		if self.help_callback is not None:
-			self.help_callback(self.commands)
+			self.help_callback()
 		elif self.help_string is not None:
 			print self.help_string
 		else:
