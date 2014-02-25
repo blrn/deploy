@@ -64,11 +64,20 @@ def push(options, config):
 	sftp = Sftp(config.get_destination_root(), file_dict)
 	sftp.send_files(config.get_user(), config.get_host())
 
+def help():
+	print """
+usage: deploy cmd
+	
+	help 		Show this help message
+	init 		Start deploy in the current directory
+	push 		Push to a repository
+		"""
+
 def main(name="deploy"):
 	#dest = args.get_destination()
 	#init = args.get_init()
 	config = Config()
-	cParser = CommandParser(name)
+	cParser = CommandParser(name, help_callback=help())
 	cParser.add_command('init', 'init help', init, config)
 	cParser.add_command('push', 'push help', push, config)
 	cParser.parse_args()
