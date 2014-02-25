@@ -9,10 +9,14 @@ class CommandParser(object):
 		self.help_string = help_string
 
 	def add_command(self, command, cmd_help, callback, args=None):
-		self.commands.append({command:callback, 
-			'args': args,
-			'help':cmd_help, 
-			"cmd":command})
+		if type(command) is type(list()):
+			for cmd in command:
+				self.add_command(cmd, cmd_help, callback, args)
+		else:
+			self.commands.append({command:callback, 
+				'args': args,
+				'help':cmd_help, 
+				"cmd":command})
 
 	def parse_args(self):
 		if len(sys.argv) > 1:

@@ -82,7 +82,7 @@ def main(name="deploy"):
 	cParser = CommandParser(name, help_callback=help)
 	cParser.add_command('init', 'init help', init, config)
 	cParser.add_command('push', 'push help', push, config)
-	cParser.add_command('version', 'show version', version, None)
+	cParser.add_command(['version', '-v', '--version'], 'show version', version, None)
 	cParser.parse_args()
 
 	
