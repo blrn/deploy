@@ -1,11 +1,9 @@
-import args
+from args import CommandParser
 from config import Config
 from config import ConfigError
 import os
 from sftp import Sftp
 
-
-	
 def get_files(config, directory='.'):
 	file_dict = dict()
 	file_list = list()
@@ -30,10 +28,53 @@ def handle_config_error(e):
 	exit()
 
 
-def main():
-	dest = args.get_destination()
-	init = args.get_init()
+def init(options, config):
+	if config.config_file_exists():		#check if the stuff already exists and handle the stuff
+		print "config file already exists"
+		return
+	else:
+		config.create_config_template()
+		print "Config file created"
+		return
+
+def push(options, config):
+	def help():
+		print "push all tracked files to the remote"
+		print "usage: deploy push [<remote] [<options>]\n"
+		print "\t-r\t\tremove all files that are not locally tracked NOT FUNCTIONAL"
+
+	if options is None or len(options) == 1:
+		if options is not None and options[0] == 'help':
+			help()
+			return
+		else:
+			if config.config_file_exists():		# if it does try to use it, show help if
+				try:
+					if options is None:
+						config.load_config(options)
+					else:
+						config.load_config(options[0])	# error occurs
+				except ConfigError, e:
+					handle_config_error(e)
+				
+			else:
+				print "No Config file found, use 'deploy init' to create a sample config file."
+				return
+	file_dict = get_files(config)
+	sftp = Sftp(config.get_destination_root(), file_dict)
+	sftp.send_files(config.get_user(), config.get_host())
+
+def main(name="deploy"):
+	#dest = args.get_destination()
+	#init = args.get_init()
 	config = Config()
+	cParser = CommandParser(name)
+	cParser.add_command('init', 'init help', init, config)
+	cParser.add_command('push', 'push help', push, config)
+	cParser.parse_args()
+
+	
+	"""
 	if init:
 		if config.config_file_exists():		#check if the stuff already exists and handle the stuff
 			print "config file already exists"
@@ -53,14 +94,12 @@ def main():
 		else:
 			print "No Config file found, use 'deploy --init' to create a sample config file."
 			exit()
-
 	# everthing is set up i think,
 	# implement sftp here
-	file_dict = get_files(config)
+	
 	sftp = Sftp(config.get_destination_root(), file_dict)
 	sftp.send_files(config.get_user(), config.get_host())
-
-
+	"""
 
 
 
