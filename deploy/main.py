@@ -2,6 +2,7 @@ from args import CommandParser
 from config import Config
 from config import ConfigError
 import os
+import pkg_resources
 from sftp import Sftp
 
 def get_files(config, directory='.'):
@@ -63,7 +64,8 @@ def push(options, config):
 	file_dict = get_files(config)
 	sftp = Sftp(config.get_destination_root(), file_dict)
 	sftp.send_files(config.get_user(), config.get_host())
-
+def version(options):
+	print pkg_resources.get_distribution('deploy').version
 def help():
 	print """
 usage: deploy cmd
@@ -80,6 +82,7 @@ def main(name="deploy"):
 	cParser = CommandParser(name, help_callback=help)
 	cParser.add_command('init', 'init help', init, config)
 	cParser.add_command('push', 'push help', push, config)
+	cParser.add_command(['version', '-v', '--version'], 'show version', version, None)
 	cParser.parse_args()
 
 
