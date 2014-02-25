@@ -82,35 +82,6 @@ def main(name="deploy"):
 	cParser.add_command('push', 'push help', push, config)
 	cParser.parse_args()
 
-	
-	"""
-	if init:
-		if config.config_file_exists():		#check if the stuff already exists and handle the stuff
-			print "config file already exists"
-			exit()
-		else:
-			config.create_config_template()
-			print "Config file created"
-			exit()
-	else:
-											# go to config and check if file exists, 
-		if config.config_file_exists():		# if it does try to use it, show help if
-			try:
-				config.load_config(dest)	# error occurs
-			except ConfigError, e:
-				handle_config_error(e)
-				
-		else:
-			print "No Config file found, use 'deploy --init' to create a sample config file."
-			exit()
-	# everthing is set up i think,
-	# implement sftp here
-	
-	sftp = Sftp(config.get_destination_root(), file_dict)
-	sftp.send_files(config.get_user(), config.get_host())
-	"""
-
-
 
 
 

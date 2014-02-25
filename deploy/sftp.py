@@ -39,13 +39,3 @@ class Sftp(object):
 				batch_file.write("put " + f + "\n")
 		batch_file.write("cd ..\n")
 		batch_file.write("lcd ..\n")
-
-		"""
-		batch_file = open(".deploy_batch")
-		batch_file.write("cd " + self.destination_path + "\n")
-		for directory in self.file_dict:
-			batch_file.write("cd " + directory + "\n")
-			batch_file.write("")
-			for f in file_dict['directory']:
-				batch_file.write("put " + f + )
-		"""
