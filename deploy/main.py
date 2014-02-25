@@ -77,7 +77,7 @@ def main(name="deploy"):
 	#dest = args.get_destination()
 	#init = args.get_init()
 	config = Config()
-	cParser = CommandParser(name, help_callback=help())
+	cParser = CommandParser(name, help_callback=help)
 	cParser.add_command('init', 'init help', init, config)
 	cParser.add_command('push', 'push help', push, config)
 	cParser.parse_args()
