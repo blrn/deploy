@@ -57,7 +57,7 @@ class Config(object):
 				return True
 		if self.ignore_ext is not None:
 			file_list = filename.split('.')
-			if file_list[len(file_list) - 1] in self.ignore_ext:
+			if file_list[-1] in self.ignore_ext:
 				return True
 		if self.ignore_group is not None:
 			for pat in self.ignore_group:
